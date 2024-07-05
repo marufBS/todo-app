@@ -20,3 +20,27 @@ exports.saveUser = async (req, res) => {
         res.status(500).send({ message: error.message })
     }
 };
+
+exports.getUsers =async (req,res)=>{
+    try {
+        const allUser = await User.find()
+        res.status(200).send(allUser)
+    } catch (error) {
+        res.status(500).send({
+            message:error.message
+        })
+    }
+}
+
+exports.updateUsers = async (req,res)=>{
+    try {
+        const name = req.body.name;
+        const id = req.params.id;
+        const updateUser = await User.findOneAndUpdate({_id:id},{name})
+        res.status(200).send(updateUser)
+    } catch (error) {
+        res.status(500).send({
+            message:error.message
+        })
+    }
+}
